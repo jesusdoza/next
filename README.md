@@ -2,10 +2,16 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 # using
 
-- clerk
 - next and tailwind
-- prisma sql
-  -typescript
+- shadcn
+- prisma
+- typescript
+
+# services
+
+- clerk - Authentication
+- planetscale - database SQL
+- uploadThing - media
 
 ## Getting Started
 
