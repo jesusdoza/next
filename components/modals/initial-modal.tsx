@@ -61,7 +61,7 @@ export default function InitialModal() {
   if (!isMounted) return null;
   return (
     <Dialog open>
-      <DialogContent className=" bg-green-400 text-black p-0 overflow-hidden">
+      <DialogContent className=" bg-gray-400 text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl font-bold">
             Create your server

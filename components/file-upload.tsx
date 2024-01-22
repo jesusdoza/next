@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import { UploadDropzone } from "@/lib/uploadthing";
+import "@uploadthing/react/styles.css";
 
 interface FileUploadProps {
   onChange: (url?: string) => void;
@@ -9,5 +11,16 @@ interface FileUploadProps {
 }
 
 export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
-  return <div>FileUpload</div>;
+  return (
+    <div>
+      <UploadDropzone
+        onUploadError={(error: Error) => {
+          console.log("error uploading file", error);
+        }}
+        endpoint={endpoint}
+        onClientUploadComplete={(res) => {
+          onChange(res?.[0].url);
+        }}></UploadDropzone>
+    </div>
+  );
 };
