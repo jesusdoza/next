@@ -3,6 +3,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import axios from "axios";
+
+import { useRouter } from "next/navigation";
 
 import { FileUpload } from "@/components/file-upload";
 import { Button } from "@/components/ui/button";
@@ -35,6 +38,8 @@ const formSchema = z.object({
 });
 
 export default function InitialModal() {
+  const router = useRouter();
+
   //! used only for clearing out hydration error that pops up
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
@@ -53,7 +58,14 @@ export default function InitialModal() {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      await axios.post("/api/servers", values);
+      form.reset();
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   //!use for hydration error that pops up  part of useEffect
