@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs";
 const f = createUploadthing();
 
 const handleAuth = () => {
+  //check session has user id in auth
   const { userId } = auth();
 
   if (!userId) throw new Error("Unauthorized");
