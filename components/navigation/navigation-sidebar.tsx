@@ -5,6 +5,8 @@ import React from "react";
 import NavigationAction from "@/components/navigation/navigation-action";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { NavigationItem } from "@/components/navigation/navigation-item";
+import { ModeToggle } from "../mode-toggle";
 
 const NavigationSidebar = async () => {
   const profile = await currentProfile();
@@ -25,11 +27,17 @@ const NavigationSidebar = async () => {
             <div
               key={server.id}
               className="mb-4 ">
-              <NavigationItem></NavigationItem>
+              <NavigationItem
+                id={server.id}
+                name={server.name}
+                imageUrl={server.imageUrl}></NavigationItem>
             </div>
           );
         })}
       </ScrollArea>
+      <div className="pb-3 mt-auto items-center flex-col gap-y-4">
+        <ModeToggle />
+      </div>
     </div>
   );
 };
