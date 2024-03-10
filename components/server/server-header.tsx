@@ -1,13 +1,12 @@
 "use client";
 import { ServerWithMembersWithProfiles } from "@/types";
+import { MemberRole } from "@prisma/client";
 
 interface ServerHeaderProps {
-  role: string;
   server: ServerWithMembersWithProfiles;
+  role?: MemberRole;
 }
 
-function ServerHeader({ role, server }: ServerHeaderProps) {
-  return <div>ServerHeader</div>;
+export function ServerHeader({ role, server }: ServerHeaderProps) {
+  return <div>ServerHeader!</div>;
 }
-
-export default ServerHeader;
