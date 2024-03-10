@@ -10,7 +10,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 # services
 
 - clerk - Authentication
-- planetscale - database SQL no longer free on 4-8-2024
+- planetscale - database SQL no longer free on 4-8-2024 and switching to vercel postgress database
 - uploadThing - media
 
 ## Getting Started
