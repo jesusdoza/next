@@ -18,7 +18,7 @@ interface ModalData {
 export const useModal = create<ModalStore>((set) => ({
   type: null,
   isOpen: false,
-  onOpen: (type, data = {}) => set({ isOpen: true, type }),
+  onOpen: (type, data = {}) => set({ isOpen: true, type, data }),
   onClose: () => set({ type: null, isOpen: false }),
   data: {},
 }));
