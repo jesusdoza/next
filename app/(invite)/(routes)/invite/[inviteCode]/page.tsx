@@ -28,6 +28,7 @@ async function InviteCodePage({ params }: InviteCodePageProps) {
   //user is part of server already
   if (existingServer) return redirect(`/servers/${existingServer.id}`);
 
+  //add user to server
   const server = await db.server.update({
     where: { inviteCode: params.inviteCode },
     data: { members: { create: [{ profileId: profile.id }] } },
