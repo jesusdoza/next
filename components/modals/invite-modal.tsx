@@ -1,24 +1,25 @@
 "use client";
 
-import { Copy, RefreshCw } from "lucide-react";
-
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
-import { useModal } from "@/hooks/use-modal-store";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useOrigin } from "@/hooks/use-origin";
+import axios from "axios";
+import { Check, Copy, RefreshCw } from "lucide-react";
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useModal } from "@/hooks/use-modal-store";
+import { useOrigin } from "@/hooks/use-origin";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
+
 export function InviteModal() {
-  const { isOpen, onClose, type, data } = useModal();
+  const { isOpen, onClose, onOpen, type, data } = useModal();
 
   const origin = useOrigin();
   const isModalOpen = isOpen && type === "invite";
   const { server } = data;
 
   const [copied, setCopied] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const inviteURl = `${origin}/invite/${server?.inviteCode}`;
 
@@ -26,6 +27,24 @@ export function InviteModal() {
     //copy to clipboard
     navigator.clipboard.writeText(inviteURl);
     setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 1000);
+  };
+
+  const onNew = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.patch(
+        `/api/servers/${server?.id}/invite-code`
+      );
+
+      onOpen("invite", { server: response.data });
+    } catch (error) {
+      setIsLoading(false);
+      console.log("error @onNew InviteModal :", error);
+    }
   };
 
   return (
@@ -44,15 +63,26 @@ export function InviteModal() {
           </Label>
           <div className="flex item-center mt-2 gap-x-2">
             <Input
+              disabled={isLoading}
               value={inviteURl}
               className="bg-zinc-3--/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
             />
 
-            <Button size="icon">
-              <Copy className="w-4 h-4"></Copy>
+            {/* copy link button */}
+            <Button
+              disabled={isLoading}
+              onClick={onCopy}
+              size="icon">
+              {copied ? (
+                <Check className="w-4 h-4"></Check>
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
             </Button>
           </div>
           <Button
+            onClick={onNew}
+            disabled={isLoading}
             variant="link"
             size="sm"
             className="text-xs text-zinc-500 mt-4">
