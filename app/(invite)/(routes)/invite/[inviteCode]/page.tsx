@@ -34,7 +34,11 @@ async function InviteCodePage({ params }: InviteCodePageProps) {
     data: { members: { create: [{ profileId: profile.id }] } },
   });
 
-  return <div> InviteCodePage</div>;
+  if (server) {
+    return redirect(`/servers/${server.id}`);
+  }
+
+  return null;
 }
 
 export default InviteCodePage;
